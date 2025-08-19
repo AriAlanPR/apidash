@@ -5,7 +5,6 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:path/path.dart' as p;
 import 'dart:io' show Platform; // used to detect macOS
-import 'package:window_manager/window_manager.dart'; // to focus window on macOS
 
 class WorkspaceSelector extends HookWidget {
   const WorkspaceSelector({
@@ -61,23 +60,11 @@ class WorkspaceSelector extends HookWidget {
                   FilledButton.tonalIcon(
                     onPressed: () async {
                       try {
-                        // On macOS, ensure the app window is focused & frontmost
-                        // before showing the native open panel. Also seed an initial dir.
-                        if (Platform.isMacOS) {
-                          try {
-                            // Ensure the window is visible and focused.
-                            await windowManager.show();
-                            await windowManager.focus();
-                          } catch (_) {
-                            // Ignore focus errors; continue to show the picker.
-                          }
-                        }
-
                         final initialDir = Platform.isMacOS
                             ? (Platform.environment['HOME'] ?? '/')
                             : null;
 
-                        final path = await getDirectoryPath(
+                        var path = await getDirectoryPath(
                           confirmButtonText: kLabelSelect,
                           initialDirectory: initialDir,
                         );

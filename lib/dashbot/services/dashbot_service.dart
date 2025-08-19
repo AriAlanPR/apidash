@@ -4,7 +4,6 @@ import '../consts.dart';
 import '../features/features.dart';
 
 class DashBotService {
-  final OllamaClient _client;
   late final ExplainFeature _explainFeature;
   late final DebugFeature _debugFeature;
   late final DocumentationFeature _documentationFeature;
@@ -12,8 +11,7 @@ class DashBotService {
   final GeneralQueryFeature _generalQueryFeature;
 
   DashBotService()
-      : _client = OllamaClient(baseUrl: kOllamaEndpoint),
-        _generalQueryFeature =
+      : _generalQueryFeature =
             GeneralQueryFeature(OllamaClient(baseUrl: kOllamaEndpoint)) {
     _explainFeature = ExplainFeature(this);
     _debugFeature = DebugFeature(this);
