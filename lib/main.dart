@@ -21,6 +21,10 @@ void main() async {
   }
   if (!initStatus) {
     settingsModel = settingsModel?.copyWithPath(workspaceFolderPath: null);
+    // Persist the cleared workspace path so next launch also re-prompts.
+    if (settingsModel != null) {
+      await setSettingsToSharedPrefs(settingsModel);
+    }
   }
 
   runApp(
@@ -51,6 +55,12 @@ Future<bool> initApp(
     debugPrint("openBoxesStatus: $openBoxesStatus");
     if (openBoxesStatus) {
       await autoClearHistory(settingsModel: settingsModel);
+    } else {
+      // Clear persisted path so the app immediately shows the selector.
+      if (settingsModel?.workspaceFolderPath != null) {
+        final cleared = settingsModel!.copyWithPath(workspaceFolderPath: null);
+        await setSettingsToSharedPrefs(cleared);
+      }
     }
     return openBoxesStatus;
   } catch (e) {

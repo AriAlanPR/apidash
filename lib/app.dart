@@ -121,8 +121,22 @@ class DashApp extends ConsumerWidget {
         home: showWorkspaceSelector
             ? WorkspaceSelector(
                 onContinue: (val) async {
-                  await initHiveBoxes(kIsDesktop, val);
-                  ref
+                  // Try to initialize Hive with the selected path.
+                  final ok = await initHiveBoxes(kIsDesktop, val);
+                  if (!ok) {
+                    // Do not persist the path; ask the user to pick again.
+                    if (!context.mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Failed to initialize workspace. Please choose a different folder.',
+                        ),
+                      ),
+                    );
+                    return;
+                  }
+                  // Persist only when initialization succeeds.
+                  await ref
                       .read(settingsProvider.notifier)
                       .update(workspaceFolderPath: val);
                 },

@@ -1,12 +1,18 @@
 import 'package:example/src/chat_message_list.dart';
 import 'package:example/src/chat_message_text_field.dart';
 import 'package:example/src/data.dart';
-import 'package:example/src/options/options.dart';
+import 'package:example/src/options/emoji_autocomplete_options.dart';
+import 'package:example/src/options/hashtag_autocomplete_options.dart';
+import 'package:example/src/options/mention_autocomplete_options.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:multi_trigger_autocomplete_plus/multi_trigger_autocomplete_plus.dart';
 
-void main() => runApp(const MyApp());
+void main() {
+  // Disable runtime font fetching to avoid macOS sandbox network restrictions.
+  GoogleFonts.config.allowRuntimeFetching = false;
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
