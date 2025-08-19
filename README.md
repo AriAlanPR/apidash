@@ -93,7 +93,8 @@ API Dash can be downloaded from the links below:
 | --- | --- |
 | HTTP | ✅ |
 | GraphQL | ✅ |
-| SSE | https://github.com/foss42/apidash/issues/116 | 
+| SSE/Streaming | ✅ | 
+| AI | https://github.com/foss42/apidash/issues/871 | 
 | WebSocket | https://github.com/foss42/apidash/issues/15 |
 | MQTT | https://github.com/foss42/apidash/issues/115 |
 | gRPC | https://github.com/foss42/apidash/issues/14 |
